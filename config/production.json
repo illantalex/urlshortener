@@ -1,0 +1,6 @@
+{
+    "port": 443,
+    "mongoUri": "mongodb+srv://illantal:slavoncase@cluster0.lbsos.azure.mongodb.net/app?retryWrites=true&w=majority",
+    "jwtSecret": "Ohwen 5468 Zaou 8431 Skrivdatoi 223",
+    "baseUrl": "https://pure-journey-22502.herokuapp.com/"
+}
