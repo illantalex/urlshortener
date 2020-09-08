@@ -1,6 +1,0 @@
-{
-    "port": 80,
-    "mongoUri": "mongodb+srv://illantal:slavoncase@cluster0.lbsos.azure.mongodb.net/app?retryWrites=true&w=majority",
-    "jwtSecret": "Ohwen 5468 Zaou 8431 Skrivdatoi 223",
-    "baseUrl": "https://illantal-shortener.herokuapp.com"
-}

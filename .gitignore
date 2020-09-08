@@ -27,5 +27,5 @@ yarn-error.log*
 .vscode/
 
 # secret
-# config/production.json
+config/production.json
 config/default.json
