@@ -19,11 +19,11 @@ if (process.env.NODE_ENV === "production") {
     });
 }
 
-const PORT = config.get("port") || 5000;
+const PORT = config.util.getEnv("port") || 5000;
 
 async function start() {
     try {
-        mongoose.connect(config.get("mongoUri"), {
+        mongoose.connect(config.util.getEnv("mongoUri"), {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,
