@@ -28,7 +28,7 @@ async function start() {
             useUnifiedTopology: true,
             useCreateIndex: true,
         });
-        
+
         app.listen(PORT, () =>
             console.log(`App has been started on port ${PORT}...`)
         );
