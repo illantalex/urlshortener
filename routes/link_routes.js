@@ -50,4 +50,13 @@ router.get("/:id", auth, async (req, res) => {
     }
 });
 
+router.delete("/:id/delete", auth, async (req, res) => {
+    try {
+        await Link.deleteOne({"_id": req.params.id});
+        res.status(200).json({ message: "Link deleted succesfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Something was wrong, try again" });
+    }
+})
+
 module.exports = router;
