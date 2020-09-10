@@ -7,7 +7,7 @@ const shortid = require("shortid");
 
 router.post("/generate", auth, async (req, res) => {
     try {
-        const baseUrl = process.env.baseUrl;
+        const baseUrl = process.env.baseUrl || config.get("baseUrl");
         const { from } = req.body;
         const code = shortid.generate();
 

@@ -2,8 +2,8 @@ const { Router } = require("express");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const { check, validationResult } = require("express-validator");
-const jwt = require("jsonwebtoken")
-const config = require("config")
+const jwt = require("jsonwebtoken");
+const config = require("config");
 
 const router = Router();
 
@@ -57,21 +57,23 @@ router.post(
                 });
             }
 
-            const { email, password } = req.body
-            const user = await User.findOne({ email })
+            const { email, password } = req.body;
+            const user = await User.findOne({ email });
             if (!user) {
-                return res.status(400).json({message: "User wasn't found"})
+                return res.status(400).json({ message: "User wasn't found" });
             }
-            const isMatch = await bcrypt.compare(password, user.password)
+            const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
-                return res.status(400).json({message: "Wrong password, try again"})
+                return res
+                    .status(400)
+                    .json({ message: "Wrong password, try again" });
             }
             const token = jwt.sign(
                 { userId: user.id },
-                process.env.jwtSecret,
-                {expiresIn: "1h"}
-            )
-            res.json({token, userId: user.id})
+                process.env.jwtSecret || config.get("jwtSecret"),
+                { expiresIn: "1h" }
+            );
+            res.json({ token, userId: user.id });
         } catch (e) {
             res.status(500).json({ message: "Something was wrong, try again" });
         }
