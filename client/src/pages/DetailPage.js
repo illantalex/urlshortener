@@ -9,7 +9,7 @@ import { Loader } from "../components/Loader";
 import { AuthContext } from "../context/AuthContext";
 
 export const DetailPage = () => {
-    const { token } = useContext(AuthContext);
+    const { token, userId } = useContext(AuthContext);
     const { request, loading } = useHttp();
     const [link, setLink] = useState(null);
     const linkId = useParams().id;
@@ -30,30 +30,21 @@ export const DetailPage = () => {
 
     const deleteLink = async () => {
         try {
-            await request(
-                `/api/link/${linkId}/delete`,
-                "DELETE",
-                { id: linkId },
-                {
-                    Authorization: `Bearer ${token}`,
-                }
-            );
-            await history.push("/links")
-        } catch (error) {
-
-        }
-    }
+            await request(`/api/link/${linkId}`, "DELETE", { linkId, userId });
+            history.push("/links");
+        } catch (error) {}
+    };
 
     if (loading) {
         return <Loader />;
     }
 
     return (
-        <div>
+        <div className="container">
             {!loading && link && (
-                <div>
+                <div className="row">
                     <h2>Link</h2>
-                    <p>
+                    <p className="col s12">
                         Your link:{" "}
                         <a
                             href={link.to}
@@ -63,9 +54,10 @@ export const DetailPage = () => {
                             {link.to}
                         </a>
                     </p>
-                    <p>
+                    <p className="col s12">
                         It's from:{" "}
                         <a
+                            style={{ wordWrap: "break-word" }}
                             href={link.from}
                             target="_blank"
                             rel="noopener noreferrer"
@@ -73,18 +65,20 @@ export const DetailPage = () => {
                             {link.from}
                         </a>
                     </p>
-                    <p>
+                    <p className="col s12">
                         Number of clicks: <strong>{link.clicks}</strong>
                     </p>
-                    <p>
+                    <p className="col s12">
                         Date created:{" "}
                         <strong>
                             {new Date(link.date).toLocaleDateString()}
                         </strong>
                     </p>
-                    <button className="btn pink" onClick={deleteLink}>
-                        Delete
-                    </button>
+                    <p className="col s12">
+                        <button className="btn pink" onClick={deleteLink}>
+                            Delete
+                        </button>
+                    </p>
                 </div>
             )}
         </div>

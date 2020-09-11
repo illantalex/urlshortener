@@ -4,7 +4,7 @@ import { useMessage } from "../hooks/message.hook";
 import { AuthContext } from "../context/AuthContext";
 
 export const AuthPage = () => {
-    const auth = useContext(AuthContext)
+    const auth = useContext(AuthContext);
     const message = useMessage();
     const { loading, request, error, clearError } = useHttp();
     const [form, setForm] = useState({
@@ -18,8 +18,8 @@ export const AuthPage = () => {
     }, [error, message, clearError]);
 
     useEffect(() => {
-        window.M.updateTextFields()
-    }, [])
+        window.M.updateTextFields();
+    }, []);
 
     const changeHandler = (event) => {
         setForm({ ...form, [event.target.name]: event.target.value });
@@ -40,7 +40,7 @@ export const AuthPage = () => {
                 ...form,
             });
             // message(data.message);
-            auth.login(data.token, data.userId)
+            auth.login(data.token, data.userId);
         } catch (error) {}
     };
 

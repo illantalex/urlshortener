@@ -1,35 +1,37 @@
 import React from "react";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 export const LinksList = ({ links }) => {
     if (!links.length) {
-        return <p className="center">There're still no links</p>
+        return <p className="center">there're still no links</p>;
     }
     return (
-        <table>
-            <thead>
-                <tr>
-                    <th>Number</th>
-                    <th>Original</th>
-                    <th>Shorted</th>
-                    <th>Open</th>
-                </tr>
-            </thead>
+        <div className="container">
+            <div className="row">
+                <div className="col s1">#</div>
+                <div className="col s5">Original</div>
+                <div className="col s5">Shorted</div>
+                <div className="col s1">Open</div>
+                {/* <div className="col s1">Delete</div> */}
+            </div>
 
-            <tbody>
-                {links.map((link, index) => {
-                    return (
-                        <tr key={link._id}>
-                            <td>{index + 1}</td>
-                            <td>{link.from}</td>
-                            <td>{link.to}</td>
-                            <td>
-                                <Link to={`/detail/${link._id}`}>Open</Link>
-                            </td>
-                        </tr>
-                    )
-                })}
-            </tbody>
-        </table>
+            {links.map((link, index) => {
+                return (
+                    <div className="row" key={link._id}>
+                        <div className="col s1">{index + 1}</div>
+                        <div className="col s5" style={{ overflow: "hidden" }}>
+                            {link.from}
+                        </div>
+                        <div className="col s5" style={{ overflow: "hidden" }}>
+                            {link.to}
+                        </div>
+                        <div className="col s1">
+                            <Link to={`/detail/${link._id}`}>Open</Link>
+                        </div>
+                        {/* <div className="col s1">Delete</div> */}
+                    </div>
+                );
+            })}
+        </div>
     );
 };

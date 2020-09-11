@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
@@ -8,72 +8,68 @@ export const Navbar = () => {
 
     const logoutHandler = (event) => {
         event.preventDefault();
+        closeHandler();
         auth.logout();
         history.push("/");
     };
+
+    const closeHandler = () => {
+        const sidenav = window.M.Sidenav.getInstance(
+            document.querySelector(".sidenav")
+        );
+        sidenav.close();
+    };
+
+    useEffect(() => {
+        window.M.Sidenav.init(document.querySelector(".sidenav"));
+    }, []);
+
+    const navList = (
+        <div>
+            <li>
+                <NavLink to="/create" onClick={closeHandler}>
+                    Create
+                </NavLink>
+            </li>
+            <li>
+                <NavLink to="/links" onClick={closeHandler}>
+                    Links
+                </NavLink>
+            </li>
+            <li>
+                <a href="/" onClick={logoutHandler}>
+                    Logout
+                </a>
+            </li>
+        </div>
+    );
+
     return (
-        <nav>
-            {/* <ul id="slide-out" class="sidenav">
-                <li>
-                    <div class="user-view">
-                        <div class="background">
-                            <img src="images/office.jpg" />
-                        </div>
-                        <a href="#user">
-                            <img class="circle" src="images/yuna.jpg" />
-                        </a>
-                        <a href="#name">
-                            <span class="white-text name">John Doe</span>
-                        </a>
-                        <a href="#email">
-                            <span class="white-text email">
-                                jdandturk@gmail.com
-                            </span>
-                        </a>
-                    </div>
-                </li>
-                <li>
-                    <a href="#!">
-                        <i class="material-icons">cloud</i>First Link With Icon
+        <div>
+            <nav>
+                <div className="nav-wrapper blue darken-1">
+                    <a
+                        href=""
+                        data-target="mobile-demo"
+                        className="sidenav-trigger"
+                    >
+                        <i className="material-icons">menu</i>
                     </a>
-                </li>
-                <li>
-                    <a href="#!">Second Link</a>
-                </li>
-                <li>
-                    <div class="divider"></div>
-                </li>
-                <li>
-                    <a class="subheader">Subheader</a>
-                </li>
-                <li>
-                    <a class="waves-effect" href="#!">
-                        Third Link With Waves
-                    </a>
-                </li>
+                    <span
+                        className="brand-logo"
+                        style={{ paddingLeft: "1rem" }}
+                    >
+                        Shortify
+                    </span>
+                    <ul id="nav-mobile" className="right hide-on-med-and-down">
+                        {navList}
+                    </ul>
+                </div>
+            </nav>
+
+            <ul className="sidenav" id="mobile-demo">
+                {navList}
             </ul>
-            <a href="#" data-target="slide-out" class="sidenav-trigger">
-                <i class="material-icons">menu</i>
-            </a> */}
-            <div
-                className="nav-wrapper blue darken-1"
-                style={{ padding: "0 2rem" }}
-            >
-                <span className="brand-logo">URL Shortener</span>
-                <ul id="nav-mobile" className="right hide-on-med-and-down">
-                    <li>
-                        <NavLink to="/create">Create</NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/links">Links</NavLink>
-                    </li>
-                    <li>
-                        <a href="/" onClick={logoutHandler}>
-                            Logout
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        </div>
     );
 };

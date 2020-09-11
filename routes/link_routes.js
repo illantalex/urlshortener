@@ -50,13 +50,20 @@ router.get("/:id", auth, async (req, res) => {
     }
 });
 
-router.delete("/:id/delete", auth, async (req, res) => {
+router.delete("/:linkId", async (req, res) => {
     try {
-        await Link.deleteOne({"_id": req.params.id});
+        const link = await Link.findById(req.body.linkId);
+        if (link.owner == req.body.userId) {
+            await Link.deleteOne({ _id: req.body.linkId });
+        } else {
+            res.status(403).json({
+                message: "Link doesn't belong to this user",
+            });
+        }
         res.status(200).json({ message: "Link deleted succesfully" });
     } catch (error) {
         res.status(500).json({ message: "Something was wrong, try again" });
     }
-})
+});
 
 module.exports = router;

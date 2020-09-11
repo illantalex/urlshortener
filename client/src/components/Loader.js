@@ -1,7 +1,13 @@
 import React from "react";
 
 export const Loader = () => (
-    <div style={{display: "flex", justifyContent: "center", paddingTop: "2rem"}}>
+    <div
+        style={{
+            display: "flex",
+            justifyContent: "center",
+            paddingTop: "2rem",
+        }}
+    >
         <div className="preloader-wrapper big active">
             <div className="spinner-layer spinner-blue-only">
                 <div className="circle-clipper left">
