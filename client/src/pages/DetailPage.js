@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { Loader } from "../components/Loader";
 import { AuthContext } from "../context/AuthContext";
 import { useMessage } from "../hooks/message.hook";
+import { Dialog } from "../components/Dialog";
 
 export const DetailPage = () => {
     const { token } = useContext(AuthContext);
@@ -29,7 +30,6 @@ export const DetailPage = () => {
     useEffect(() => {
         getLink();
     }, [getLink]);
-
 
     useEffect(() => {
         message(error);
@@ -86,9 +86,18 @@ export const DetailPage = () => {
                         </strong>
                     </p>
                     <p className="col s12">
-                        <button className="btn pink" onClick={deleteLink}>
+                        <button
+                            className="btn pink modal-trigger"
+                            data-target={"modal0"}
+                        >
                             Delete
                         </button>
+                        <Dialog
+                            header="Delete link?"
+                            text={`Are you sure you want to delete link ${link.from}?`}
+                            index={0}
+                            func={deleteLink}
+                        />
                     </p>
                 </div>
             )}

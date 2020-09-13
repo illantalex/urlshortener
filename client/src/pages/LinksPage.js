@@ -50,5 +50,9 @@ export const LinksPage = () => {
     if (loading) {
         return <Loader />;
     }
-    return <div>{!loading && <LinksList links={links} deleteLink={deleteLink} />}</div>;
+    return (
+        <div>
+            {!loading && <LinksList links={links} deleteLink={deleteLink} />}
+        </div>
+    );
 };

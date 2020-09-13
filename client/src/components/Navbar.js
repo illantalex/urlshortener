@@ -49,8 +49,7 @@ export const Navbar = () => {
             <nav>
                 <div className="nav-wrapper blue darken-1">
                     <a
-                        href=""
-                        data-target="mobile-demo"
+                        href="#mobile-demo"
                         className="sidenav-trigger"
                     >
                         <i className="material-icons">menu</i>
