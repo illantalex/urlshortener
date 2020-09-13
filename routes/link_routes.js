@@ -50,14 +50,14 @@ router.get("/:id", auth, async (req, res) => {
     }
 });
 
-router.delete("/:linkId", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
     try {
-        const link = await Link.findById(req.body.linkId);
-        if (link.owner == req.body.userId) {
-            await Link.deleteOne({ _id: req.body.linkId });
+        const link = await Link.findOne({"_id": req.params.id, "owner": req.user.userId});
+        if (link) {
+            await link.deleteOne();
         } else {
-            res.status(403).json({
-                message: "Link doesn't belong to this user",
+            res.status(404).json({
+                message: "Link wasn't found",
             });
         }
         res.status(200).json({ message: "Link deleted succesfully" });

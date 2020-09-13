@@ -7,13 +7,15 @@ import { useContext } from "react";
 import { useEffect } from "react";
 import { Loader } from "../components/Loader";
 import { AuthContext } from "../context/AuthContext";
+import { useMessage } from "../hooks/message.hook";
 
 export const DetailPage = () => {
-    const { token, userId } = useContext(AuthContext);
-    const { request, loading } = useHttp();
+    const { token } = useContext(AuthContext);
+    const { request, loading, error, clearError } = useHttp();
     const [link, setLink] = useState(null);
     const linkId = useParams().id;
     const history = useHistory();
+    const message = useMessage();
 
     const getLink = useCallback(async () => {
         try {
@@ -28,9 +30,18 @@ export const DetailPage = () => {
         getLink();
     }, [getLink]);
 
+
+    useEffect(() => {
+        message(error);
+        clearError();
+    }, [error, message, clearError]);
+
     const deleteLink = async () => {
         try {
-            await request(`/api/link/${linkId}`, "DELETE", { linkId, userId });
+            const data = await request(`/api/link/${linkId}`, "DELETE", null, {
+                Authorization: `Bearer ${token}`,
+            });
+            message(data.message);
             history.push("/links");
         } catch (error) {}
     };
